@@ -198,7 +198,9 @@ class MLX_VLM_Sampler:
             response = mlx_vlm.generate(**generate_kwargs)
 
             # Extract text from response
-            if isinstance(response, dict):
+            if hasattr(response, "text"):
+                generated_text = response.text
+            elif isinstance(response, dict):
                 generated_text = response.get("text", str(response))
             else:
                 generated_text = str(response)
